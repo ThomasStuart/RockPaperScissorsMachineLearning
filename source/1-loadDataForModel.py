@@ -9,9 +9,10 @@ training_data = []
 X = [] #features
 y = [] #labels
 
+
 def create_training_data():
 	for category in Constants.CATEGORIES:
-		path = os.path.join(Constants.DATADIR, category)
+		path = os.path.join(Constants.DATA_DIR, category)
 		class_num = Constants.CATEGORIES.index(category)
 		for img in os.listdir(path):
 			try :
@@ -21,6 +22,7 @@ def create_training_data():
 				training_data.append([new_array, class_num])
 			except Exception as e:
 				pass
+
 
 create_training_data()
 random.shuffle(training_data)
@@ -35,13 +37,13 @@ y = np.array(y)
 print("X.shape: ", X.shape)
 print("y.shape: ", y.shape)
 # Creating the files containing all the information about your model
-pickle_out = open("../X.pickle", "wb")
+pickle_out = open("X.pickle", "wb")
 pickle.dump(X, pickle_out)
 pickle_out.close()
 
-pickle_out = open("../y.pickle", "wb")
+pickle_out = open("y.pickle", "wb")
 pickle.dump(y, pickle_out)
 pickle_out.close()
 
-pickle_in = open("../X.pickle", "rb")
+pickle_in = open("X.pickle", "rb")
 X = pickle.load(pickle_in)
