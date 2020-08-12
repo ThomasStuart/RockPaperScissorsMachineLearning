@@ -78,11 +78,10 @@ while True:
     cv2.putText(frame, "Winner: " + winner,
                 (400, 600), font, 2, (0, 0, 255), 4, cv2.LINE_AA)
 
-    # if computer_move_name != "none":
-    #     icon = cv2.imread(
-    #         "images/{}.png".format(computer_move_name))
-    #     icon = cv2.resize(icon, (400, 400))
-    #     frame[100:500, 800:1200] = icon
+    if computer_move_name != "none":
+        icon = cv2.imread("/Users/Thomas_Stuart/PycharmProjects/ClassifyImage/images/{}.png".format(computer_move_name))
+        icon = cv2.resize(icon, (400, 400))
+        frame[100:500, 800:1200] = icon
 
     cv2.imshow("Rock Paper Scissors", frame)
 

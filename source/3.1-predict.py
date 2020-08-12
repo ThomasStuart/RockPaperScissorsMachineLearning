@@ -15,8 +15,7 @@ def captureImage():
         cv2.rectangle(frame, (100, 100), (500, 500), (255, 255, 255), 2)
 
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(frame, "Collecting {}".format(count),
-                    (5, 50), font, 0.7, (0, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(frame, "Collecting {}".format(count), (5, 50), font, 0.7, (0, 255, 255), 2, cv2.LINE_AA)
         cv2.imshow("Collecting images", frame)
 
         if cv2.waitKey(1) & 0xFF == ord(' '):
@@ -43,5 +42,4 @@ imagePath = "/Users/Thomas_Stuart/PycharmProjects/ClassifyImage/temp.jpg"       
 image = prepare(imagePath)
 prediction = model.predict([image])
 prediction = list(prediction[0])
-
 print(Constants.CATEGORIES[prediction.index(max(prediction))])

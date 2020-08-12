@@ -1,19 +1,12 @@
-import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
 import pickle
-from keras.models import model_from_json
-from keras.models import load_model
 import matplotlib.pyplot as plt
-import numpy as np
-
-NUM_CLASSES = 3
+import Constants
 
 # Opening the files about data
 X = pickle.load(open("X.pickle", "rb"))
 y = pickle.load(open("y.pickle", "rb"))
-
-#X = np.asarray(X).astype(np.float32)
 
 # normalizing data (a pixel goes from 0 to 255)
 X = X/255.0
@@ -25,25 +18,10 @@ model.add(Conv2D(32, (3, 3), input_shape = X.shape[1:]))
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
-model.add(Conv2D(64, (3, 3)))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2,2)))
-
-model.add(Conv2D(64, (3, 3)))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2,2)))
-model.add(Dropout(0.25))
-
 # 2 hidden layers
-model.add(Flatten())
-model.add(Dense(128))
-model.add(Activation("relu"))
-
-model.add(Dense(128))
-model.add(Activation("relu"))
-
-# The output layer with 13 neurons, for 13 classes
-model.add(Dense(NUM_CLASSES))
+model.add(Flatten(input_shape= (Constants.IMG_SIZE, Constants.IMG_SIZE)))
+model.add(Dense(128), activation='relu')
+model.add(Dense(10))
 model.add(Activation("softmax"))
 
 # Compiling the model using some basic parameters
@@ -66,7 +44,6 @@ print("Saved model to disk")
 model.save('CNN.model')
 
 # Printing a graph showing the accuracy changes during the training phase
-print(history.history.keys())
 plt.figure(1)
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
@@ -74,3 +51,4 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'validation'], loc='upper left')
+plt.show()
